@@ -1,16 +1,22 @@
 const XDate = require('xdate');
 
 function sameMonth(a, b) {
-  return a instanceof XDate && b instanceof XDate &&
+  return (
+    a instanceof XDate &&
+    b instanceof XDate &&
     a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth();
+    a.getMonth() === b.getMonth()
+  );
 }
 
 function sameDate(a, b) {
-  return a instanceof XDate && b instanceof XDate &&
+  return (
+    a instanceof XDate &&
+    b instanceof XDate &&
     a.getFullYear() === b.getFullYear() &&
     a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate();
+    a.getDate() === b.getDate()
+  );
 }
 
 function isGTE(a, b) {
@@ -23,7 +29,8 @@ function isLTE(a, b) {
 
 function fromTo(a, b) {
   const days = [];
-  let from = +a, to = +b;
+  let from = +a,
+    to = +b;
   for (; from <= to; from = new XDate(from, true).addDays(1).getTime()) {
     days.push(new XDate(from, true));
   }
@@ -31,7 +38,8 @@ function fromTo(a, b) {
 }
 
 function month(xd) {
-  const year = xd.getFullYear(), month = xd.getMonth();
+  const year = xd.getFullYear(),
+    month = xd.getMonth();
   const days = new Date(year, month + 1, 0).getDate();
 
   const firstDay = new XDate(year, month, 1, 0, 0, 0, true);
@@ -44,16 +52,20 @@ function weekDayNames(firstDayOfWeek = 0) {
   let weekDaysNames = XDate.locales[XDate.defaultLocale].dayNamesShort;
   const dayShift = firstDayOfWeek % 7;
   if (dayShift) {
-    weekDaysNames = weekDaysNames.slice(dayShift).concat(weekDaysNames.slice(0, dayShift));
+    weekDaysNames = weekDaysNames
+      .slice(dayShift)
+      .concat(weekDaysNames.slice(0, dayShift));
   }
+  console.warn('weekDaysNames', weekDaysNames);
   return weekDaysNames;
 }
 
 function page(xd, firstDayOfWeek) {
   const days = month(xd);
-  let before = [], after = [];
+  let before = [],
+    after = [];
 
-  const fdow = ((7 + firstDayOfWeek) % 7) || 7;
+  const fdow = (7 + firstDayOfWeek) % 7 || 7;
   const ldow = (fdow + 6) % 7;
 
   firstDayOfWeek = firstDayOfWeek || 0;
@@ -88,5 +100,5 @@ module.exports = {
   page,
   fromTo,
   isLTE,
-  isGTE
+  isGTE,
 };

@@ -75,19 +75,19 @@ class CalendarHeader extends Component {
     return this.addMonth();
   }
 
-  getWeekDayNames(firstDayOfWeek = 0) {
+  getWeekDayNames = (firstDayOfWeek = 0) => {
     let names = this.props.weekDayNames;
     const dayShift = firstDayOfWeek % 7;
     if (dayShift) {
       names = names.slice(dayShift).concat(names.slice(0, dayShift));
     }
     return names;
-  }
+  };
 
   render() {
     let leftArrow = <View />;
     let rightArrow = <View />;
-    let weekDaysNames = getWeekDayNames(this.props.firstDay);
+    let weekDaysNames = this.getWeekDayNames(this.props.firstDay);
 
     if (!this.props.hideArrows) {
       leftArrow = (
