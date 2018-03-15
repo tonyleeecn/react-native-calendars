@@ -69,6 +69,8 @@ class Calendar extends Component {
     onPressArrowLeft: PropTypes.func,
     // Handler which gets executed when press arrow icon left. It receive a callback can go next month
     onPressArrowRight: PropTypes.func,
+
+    weekDayNames: PropTypes.arrayOf(PropTypes.string),
   };
 
   constructor(props) {
@@ -286,6 +288,7 @@ class Calendar extends Component {
           weekNumbers={this.props.showWeekNumbers}
           onPressArrowLeft={this.props.onPressArrowLeft}
           onPressArrowRight={this.props.onPressArrowRight}
+          weekDayNames={this.props.weekDayNames}
         />
         {weeks}
       </View>

@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import XDate from 'xdate';
 import PropTypes from 'prop-types';
 import styleConstructor from './style';
-import { weekDayNames } from '../../dateutils';
+// import { weekDayNames } from '../../dateutils';
 
 class CalendarHeader extends Component {
   static propTypes = {
@@ -19,6 +19,11 @@ class CalendarHeader extends Component {
     weekNumbers: PropTypes.bool,
     onPressArrowLeft: PropTypes.func,
     onPressArrowRight: PropTypes.func,
+    weekDayNames: PropTypes.arrayOf(PropTypes.string),
+  };
+
+  static defaultProps = {
+    weekDayNames: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
   };
 
   constructor(props) {
@@ -70,10 +75,20 @@ class CalendarHeader extends Component {
     return this.addMonth();
   }
 
+  getWeekDayNames(firstDayOfWeek = 0) {
+    let names = this.props.weekDayNames;
+    const dayShift = firstDayOfWeek % 7;
+    if (dayShift) {
+      names = names.slice(dayShift).concat(names.slice(0, dayShift));
+    }
+    return names;
+  }
+
   render() {
     let leftArrow = <View />;
     let rightArrow = <View />;
-    let weekDaysNames = weekDayNames(this.props.firstDay);
+    let weekDaysNames = getWeekDayNames(this.props.firstDay);
+
     if (!this.props.hideArrows) {
       leftArrow = (
         <TouchableOpacity onPress={this.onPressLeft} style={this.style.arrow}>
@@ -108,7 +123,9 @@ class CalendarHeader extends Component {
       <View>
         <View style={this.style.header}>
           {leftArrow}
-          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
+          <View
+            style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}
+          >
             <Text allowFontScaling={false} style={this.style.monthText}>
               {this.props.month.toString(
                 this.props.monthFormat ? this.props.monthFormat : 'MMMM yyyy'
