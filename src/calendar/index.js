@@ -55,6 +55,7 @@ class Calendar extends Component {
     renderArrow: PropTypes.func,
     // Provide custom day rendering component
     dayComponent: PropTypes.any,
+    headerComponent: PropTypes.any,
     // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
     monthFormat: PropTypes.string,
     // Disables changing month when click on days of other months (when hideExtraDays is false). Default = false
@@ -118,6 +119,7 @@ class Calendar extends Component {
       () => {
         if (!doNotTriggerListeners) {
           const currMont = this.state.currentMonth.clone();
+          1;
           if (this.props.onMonthChange) {
             this.props.onMonthChange(xdateToData(currMont));
           }
@@ -273,9 +275,10 @@ class Calendar extends Component {
         indicator = true;
       }
     }
+    const Header = this.props.headerComponent || CalendarHeader;
     return (
       <View style={[this.style.container, this.props.style]}>
-        <CalendarHeader
+        <Header
           theme={this.props.theme}
           hideArrows={this.props.hideArrows}
           month={this.state.currentMonth}
