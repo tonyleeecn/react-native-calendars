@@ -94,16 +94,17 @@ class Calendar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const current = parseDate(nextProps.current);
-    if (
-      current &&
-      current.toString('yyyy MM') !==
-        this.state.currentMonth.toString('yyyy MM')
-    ) {
-      this.setState({
-        currentMonth: current.clone(),
-      });
-    }
+    // const current = parseDate(nextProps.current);
+    // if (
+    //   current &&
+    //   current.toString('yyyy MM') !==
+    //     this.state.currentMonth.toString('yyyy MM')
+    // ) {
+    //   console.log('nextProps', current);
+    //   this.setState({
+    //     currentMonth: current.clone(),
+    //   });
+    // }
   }
 
   updateMonth(day, doNotTriggerListeners) {
@@ -112,6 +113,7 @@ class Calendar extends Component {
     ) {
       return;
     }
+    // console.log('updateMonth', day);
     this.setState(
       {
         currentMonth: day.clone(),
@@ -254,6 +256,7 @@ class Calendar extends Component {
   }
 
   render() {
+    // console.log('currentMonth', this.state.currentMonth);
     const days = dateutils.page(this.state.currentMonth, this.props.firstDay);
     const weeks = [];
     while (days.length) {
@@ -290,7 +293,9 @@ class Calendar extends Component {
           hideDayNames={this.props.hideDayNames}
           weekNumbers={this.props.showWeekNumbers}
           onPressArrowLeft={this.props.onPressArrowLeft}
+          leftEnabled={this.props.leftEnabled}
           onPressArrowRight={this.props.onPressArrowRight}
+          rightEnabled={this.props.rightEnabled}
           weekDayNames={this.props.weekDayNames}
         />
         {weeks}
