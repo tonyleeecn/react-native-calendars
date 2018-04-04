@@ -94,6 +94,7 @@ class Calendar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.forceUpdate();
     // const current = parseDate(nextProps.current);
     // if (
     //   current &&
